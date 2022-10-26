@@ -2,6 +2,12 @@
   "name": "travel-mob",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "resolve": {
+    "extensions": [
+      ".ts",
+      ".js"
+    ]
+  },
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,7 +15,6 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@react-native-community/datetimepicker": "^6.5.2",
     "axios": "^1.1.3",
     "expo": "~46.0.16",
     "expo-constants": "^13.2.4",
