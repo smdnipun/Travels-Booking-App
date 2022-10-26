@@ -24,12 +24,29 @@ import {
   TextLinkContent,
 } from '../Styles'
 import { Formik } from 'formik'
-import { View } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 
 const { brand, darkLight, primary } = colors
 
+import DateTimePicker from '@react-native-community/datetimepicker'
+
 export const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true)
+  const [show, setShow] = useState(false)
+  // const [date, setDate] = useState(new Date(2000, 0, 1))
+
+  //actual date of birth to be sent
+  // const [dob, setDob] = useState()
+  // const onChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate || date
+  //   setShow(false)
+  //   setDate(currentDate)
+  //   setDob(currentDate)
+  // }
+
+  const showDatePicker = () => {
+    setShow(true)
+  }
 
   return (
     <StyledContainer>
@@ -37,6 +54,16 @@ export const Signup = () => {
       <InnerContainer>
         <PageTitle>Ticket Booking</PageTitle>
         <SubTitle>Accont SignUp</SubTitle>
+        {/* {show && (
+          <DateTimePicker
+            testID='dateTimePicker'
+            value={date}
+            mode='date'
+            is24Hour={true}
+            display='default'
+            onChange={onChange}
+          />
+        )} */}
         <Formik
           initialValues={{
             fullName: '',
@@ -45,29 +72,42 @@ export const Signup = () => {
             address: '',
             nic: '',
             password: '',
-            rpassword: '',
+            confirmPassword: '',
           }}
           onSubmit={(values) => {
             console.log(values)
+            axios.post{}
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <StyledFormArea>
+              {/* <InputCd
+                label='Date of Birth'
+                icon='calendar'
+                placeholder='YYYY - MM - DD'
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('dateOfBirth')}
+                onBlur={handleBlur('dateOfBirth')}
+                value={dob ? dob.toDateString() : ''}
+                isDate={true}
+                editable={false}
+                showDatePicker={showDatePicker}
+              /> */}
+
               <InputCd
                 label='Full Name'
                 icon='person'
-                placeholder='Enter full Name'
+                placeholder='Jhone Smith'
                 placeholderTextColor={darkLight}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
+                onChangeText={handleChange('fullName')}
+                onBlur={handleBlur('fullName')}
                 value={values.fullName}
-                keyboardType='email-address'
               />
 
               <InputCd
                 label='Email'
                 icon='mail'
-                placeholder='Enter email'
+                placeholder='jhone@gmail.com'
                 placeholderTextColor={darkLight}
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
@@ -80,32 +120,31 @@ export const Signup = () => {
                 icon='device-mobile'
                 placeholder='Enter Contact No.'
                 placeholderTextColor={darkLight}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                keyboardType='email-address'
+                onChangeText={handleChange('phnNo')}
+                onBlur={handleBlur('phnNo')}
+                value={values.phnNo}
+                keyboardType='numeric'
               />
 
               <InputCd
                 label='Address'
                 icon='location'
-                placeholder='Enter Address'
+                placeholder='9th Avenu'
                 placeholderTextColor={darkLight}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                keyboardType='email-address'
+                onChangeText={handleChange('address')}
+                onBlur={handleBlur('address')}
+                value={values.address}
               />
 
               <InputCd
-                label='NIC'
+                label='NIC(*Enter without V)'
                 icon='id-badge'
                 placeholder='Enter NIC'
                 placeholderTextColor={darkLight}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                keyboardType='email-address'
+                onChangeText={handleChange('nic')}
+                onBlur={handleBlur('nic')}
+                value={values.nic}
+                keyboardType='numeric'
               />
 
               <InputCd
@@ -161,6 +200,8 @@ export const InputCd = ({
   isPassword,
   hidePassword,
   setHidePassword,
+  // isDate,
+  // showDatePicker,
   ...props
 }) => {
   return (
@@ -170,6 +211,13 @@ export const InputCd = ({
       </LeftIcon>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextInput {...props} />
+      {/* {!isDate && <StyledTextInput {...props} />}
+      {isDate && (
+        <TouchableOpacity onPress={showDatePicker}>
+          <StyledTextInput {...props} />
+        </TouchableOpacity>
+      )} */}
+
       {isPassword && (
         <RightIcon onPress={() => setHidePassword(!hidePassword)}>
           <Ionicons
