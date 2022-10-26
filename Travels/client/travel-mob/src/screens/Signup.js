@@ -28,21 +28,25 @@ import { View } from 'react-native'
 
 const { brand, darkLight, primary } = colors
 
-export const Login = () => {
+export const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true)
 
   return (
     <StyledContainer>
       <StatusBar style='dark' />
       <InnerContainer>
-        <PageLogo
-          resizeMode='cover'
-          source={require('./../../assets/logo.png')}
-        />
         <PageTitle>Ticket Booking</PageTitle>
-        <SubTitle>Accont Login</SubTitle>
+        <SubTitle>Accont SignUp</SubTitle>
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{
+            fullName: '',
+            email: '',
+            phnNo: '',
+            address: '',
+            nic: '',
+            password: '',
+            rpassword: '',
+          }}
           onSubmit={(values) => {
             console.log(values)
           }}
@@ -50,9 +54,53 @@ export const Login = () => {
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <StyledFormArea>
               <InputCd
+                label='Full Name'
+                icon='person'
+                placeholder='Enter full Name'
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.fullName}
+                keyboardType='email-address'
+              />
+
+              <InputCd
                 label='Email'
                 icon='mail'
-                placeholder='enter email'
+                placeholder='Enter email'
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                keyboardType='email-address'
+              />
+
+              <InputCd
+                label='Contact Number'
+                icon='device-mobile'
+                placeholder='Enter Contact No.'
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                keyboardType='email-address'
+              />
+
+              <InputCd
+                label='Address'
+                icon='location'
+                placeholder='Enter Address'
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                keyboardType='email-address'
+              />
+
+              <InputCd
+                label='NIC'
+                icon='id-badge'
+                placeholder='Enter NIC'
                 placeholderTextColor={darkLight}
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
@@ -62,7 +110,7 @@ export const Login = () => {
 
               <InputCd
                 label='Password'
-                icon='lock'
+                icon='shield-lock'
                 placeholder='* * * * * * *'
                 placeholderTextColor={darkLight}
                 onChangeText={handleChange('password')}
@@ -73,17 +121,28 @@ export const Login = () => {
                 hidePassword={hidePassword}
                 setHidePassword={setHidePassword}
               />
+
+              <InputCd
+                label='Confirm Password'
+                icon='shield-lock'
+                placeholder='* * * * * * *'
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('confirmPassword')}
+                onBlur={handleBlur('confirmPassword')}
+                value={values.confirmPassword}
+                secureTextEntry={hidePassword}
+                isPassword={true}
+                hidePassword={hidePassword}
+                setHidePassword={setHidePassword}
+              />
+
               <MsgBox>...</MsgBox>
               <StyledButton onPress={handleSubmit}>
-                <ButtonText>Login</ButtonText>
+                <ButtonText>Register</ButtonText>
               </StyledButton>
               <Line />
-              <StyledButton google={true} onPress={handleSubmit}>
-                <Fontisto name='google' color={primary} size={25} />
-                <ButtonText google={true}>  Sign in with Google</ButtonText>
-              </StyledButton>
               <ExtraView>
-                <ExtraText>Don't have an account already? </ExtraText>
+                <ExtraText>Already have a account? </ExtraText>
                 <TextLink>
                   <TextLinkContent>Signup</TextLinkContent>
                 </TextLink>
@@ -107,7 +166,7 @@ export const InputCd = ({
   return (
     <View>
       <LeftIcon>
-        <Octicons name={icon} size={30} color={brand} />
+        <Octicons name={icon} size={20} color={brand} />
       </LeftIcon>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextInput {...props} />
@@ -115,7 +174,7 @@ export const InputCd = ({
         <RightIcon onPress={() => setHidePassword(!hidePassword)}>
           <Ionicons
             name={hidePassword ? 'md-eye-off' : 'md-eye'}
-            size={30}
+            size={15}
             color={darkLight}
           />
         </RightIcon>
