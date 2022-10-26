@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import axios from 'axios'
 
 import {
   StyledContainer,
@@ -22,7 +23,7 @@ import {
   ExtraText,
   TextLink,
   TextLinkContent,
-} from '../Styles'
+} from '../styles.js'
 import { Formik } from 'formik'
 import { View } from 'react-native'
 
@@ -48,7 +49,9 @@ export const Signup = () => {
             rpassword: '',
           }}
           onSubmit={(values) => {
+            axios.post('http://localhost:5000/user/register')
             console.log(values)
+
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
