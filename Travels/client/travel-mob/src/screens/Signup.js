@@ -76,7 +76,7 @@ export const Signup = () => {
           }}
           onSubmit={(values) => {
             console.log(values)
-            axios.post{}
+            
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
