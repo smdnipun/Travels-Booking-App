@@ -54,12 +54,11 @@ export const StyledFormArea = styled.View`
 
 export const StyledTextInput = styled.TextInput`
   background-color: ${secondary};
-  padding: 15px;
   padding-left: 55px;
   padding-right: 55px;
   border-radius: 5px;
   font-size: 16px;
-  height: 60px;
+  height: 45px;
   margin-bottom: 10px;
   color: ${tertiary};
 `
@@ -71,13 +70,13 @@ export const StyledInputLabel = styled.Text`
 `
 export const LeftIcon = styled.View`
   left: 15px;
-  top: 38px;
+  top: 30px;
   position: absolute;
   z-index: 1;
 `
 export const RightIcon = styled.TouchableOpacity`
   right: 15px;
-  top: 38px;
+  top: 32px;
   position: absolute;
   z-index: 1;
 `
@@ -88,7 +87,7 @@ export const StyledButton = styled.TouchableOpacity`
   align-items: center;
   border-radius: 5px;
   margin: 5px;
-  height: 60px;
+  height: 50px;
 
   ${(props) =>
     props.google == true &&
