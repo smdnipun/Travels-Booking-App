@@ -23,7 +23,7 @@ import {
   ExtraText,
   TextLink,
   TextLinkContent,
-} from '../Styles'
+} from '../styles.js'
 import { Formik } from 'formik'
 import { View, TouchableOpacity, ActivityIndicator } from 'react-native'
 
@@ -50,6 +50,15 @@ export const Signup = () => {
   //   setShow(true)
   // }
 
+  const handleSignup = (credentials) => {
+    axios.post('http://192.168.8.175:5000/user/register', credentials).then((res) => {
+        console.log(res.data)      
+    }).catch((err) => {
+      console.log(err)
+    })
+    console.log(credentials)
+  }
+
   return (
     <StyledContainer>
       <StatusBar style='dark' />
@@ -74,17 +83,17 @@ export const Signup = () => {
             address: '',
             nic: '',
             password: '',
-            confirmPassword: '',
+            // confirmPassword: '',
           }}
-          onSubmit={(values, setSubmitting) => {
-            let obj = {
-              fullName: values.fullName,
-              email: values.email,
-              phnNo: values.phnNo,
-              address: values.address,
-              nic: values.nic,
-              password: values.password,
-            }
+          onSubmit={(values) => {
+            // let obj = {
+            //   fullName: values.fullName,
+            //   email: values.email,
+            //   phnNo: values.phnNo,
+            //   address: values.address,
+            //   nic: values.nic,
+            //   password: values.password,
+            // }
             // if (
             //   values.fullName == '' ||
             //   values.email == '' ||
@@ -99,10 +108,9 @@ export const Signup = () => {
             //   handleMessage('Password do not match!!!')
             //   setSubmitting(false)
             // } else {
-            //   handleSignup(values, setSubmitting)
+              handleSignup(values)
             // }
-            axios.post('http://localhost:5000/user/register', obj)
-            console.log(obj)
+            
           }}
         >
           {({
@@ -215,7 +223,7 @@ export const Signup = () => {
               )}
               {isSubmitting && (
                 <StyledButton onPress={handleSubmit}>
-                  <ButtonText>Register</ButtonText>
+                  <ActivityIndicator/>
                 </StyledButton>
               )}
               <Line />
