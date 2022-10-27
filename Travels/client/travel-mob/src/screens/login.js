@@ -35,33 +35,24 @@ export const Login = () => {
   const [messageType, setMessageType] = useState()
 
   const handleLogin = async (credentials) => {
-    
     const url = 'http://192.168.8.175:5000/user/login'
     await axios
       .post(url, credentials)
       .then((res) => {
         const result = res.data
         console.log(result)
-       
+
         const { message, status, data } = result
 
         if (status !== 'SUCESS') {
-          
         } else {
           // NavigationPreloadManager.navigate('Welcome', { ...data[0]});
           console.log(message, status)
         }
-        
       })
       .catch((err) => {
         console.log(err)
-       
       })
-    
-    
-    
-      
-    
   }
 
   // const handleMessage = (message, type = 'FAILD') => {
@@ -88,15 +79,9 @@ export const Login = () => {
             } else {
               handleLogin(values)
             }
-            
           }}
         >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-          }) => (
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
             <StyledFormArea>
               <InputCd
                 label='Email'
@@ -123,11 +108,10 @@ export const Login = () => {
                 setHidePassword={setHidePassword}
               />
               <MsgBox type={messageType}>{message}</MsgBox>
-             
-                <StyledButton onPress={handleSubmit}>
-                  <ButtonText>Login</ButtonText>
-                </StyledButton>
-              
+
+              <StyledButton onPress={handleSubmit}>
+                <ButtonText>Login</ButtonText>
+              </StyledButton>
 
               {/* {isSubmitting && (
                 <StyledButton disabled={true}>
