@@ -48,6 +48,21 @@ export const SubTitle = styled.Text`
   color: ${tertiary};
 `
 
+export const SubTitle1 = styled.Text`
+  font-size: 12px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  font-weight: itelic;
+  color: ${tertiary};
+`
+export const SubTitle2 = styled.Text`
+  font-size: 10px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  font-weight: itelic;
+  color: ${tertiary};
+`
+
 export const StyledFormArea = styled.View`
   width: 90%;
 `
@@ -113,6 +128,7 @@ export const ButtonText = styled.Text`
 export const MsgBox = styled.Text`
   text-align: center;
   font-size: 13px;
+  color:${props=>props.type=='SUCCESS' ? green :red} ;
 `
 
 export const Line = styled.View`
@@ -143,3 +159,32 @@ export const TextLinkContent = styled.Text`
   color: ${brand};
   font-size: 15px;
 `
+
+export const DashBoard = styled.View`
+  padding: 25px;
+  padding-top: 10px;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  height: auto;
+  align-items: center;
+`
+
+export const LeftBox = styled.View`
+width: 100px;
+height: 100px;
+left: 10px;
+
+
+`
+export const RightBox = styled.View`
+  width: 100px;
+  height: 100px;
+  right: -150px;
+  
+ 
+`
+
+
+ 
+
