@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import axios from 'axios'
 
 import {
   StyledContainer,
@@ -22,18 +23,19 @@ import {
   ExtraText,
   TextLink,
   TextLinkContent,
-} from '../Styles'
+} from '../styles.js'
 import { Formik } from 'formik'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, ActivityIndicator } from 'react-native'
 
 const { brand, darkLight, primary } = colors
-
-import DateTimePicker from '@react-native-community/datetimepicker'
 
 export const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true)
   const [show, setShow] = useState(false)
   // const [date, setDate] = useState(new Date(2000, 0, 1))
+
+  const [message, setMessage] = useState()
+  const [messageType, setMessageType] = useState()
 
   //actual date of birth to be sent
   // const [dob, setDob] = useState()
@@ -44,8 +46,17 @@ export const Signup = () => {
   //   setDob(currentDate)
   // }
 
-  const showDatePicker = () => {
-    setShow(true)
+  // const showDatePicker = () => {
+  //   setShow(true)
+  // }
+
+  const handleSignup = (credentials) => {
+    axios.post('http://192.168.8.175:5000/user/register', credentials).then((res) => {
+        console.log(res.data)      
+    }).catch((err) => {
+      console.log(err)
+    })
+    console.log(credentials)
   }
 
   return (
@@ -72,14 +83,43 @@ export const Signup = () => {
             address: '',
             nic: '',
             password: '',
-            confirmPassword: '',
+            // confirmPassword: '',
           }}
           onSubmit={(values) => {
-            console.log(values)
+            // let obj = {
+            //   fullName: values.fullName,
+            //   email: values.email,
+            //   phnNo: values.phnNo,
+            //   address: values.address,
+            //   nic: values.nic,
+            //   password: values.password,
+            // }
+            // if (
+            //   values.fullName == '' ||
+            //   values.email == '' ||
+            //   values.phnNo == '' ||
+            //   values.address == '' ||
+            //   values.nic == '' ||
+            //   values.password == ''
+            // ) {
+            //   handleMessage('Please fill all the fields')
+            //   setSubmitting(false)
+            // } else if (values.password != values.confirmPassword) {
+            //   handleMessage('Password do not match!!!')
+            //   setSubmitting(false)
+            // } else {
+              handleSignup(values)
+            // }
             
           }}
         >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            isSubmitting,
+          }) => (
             <StyledFormArea>
               {/* <InputCd
                 label='Date of Birth'
@@ -175,10 +215,17 @@ export const Signup = () => {
                 setHidePassword={setHidePassword}
               />
 
-              <MsgBox>...</MsgBox>
-              <StyledButton onPress={handleSubmit}>
-                <ButtonText>Register</ButtonText>
-              </StyledButton>
+              <MsgBox type={messageType}>{message}</MsgBox>
+              {!isSubmitting && (
+                <StyledButton onPress={handleSubmit}>
+                  <ButtonText>Register</ButtonText>
+                </StyledButton>
+              )}
+              {isSubmitting && (
+                <StyledButton onPress={handleSubmit}>
+                  <ActivityIndicator/>
+                </StyledButton>
+              )}
               <Line />
               <ExtraView>
                 <ExtraText>Already have a account? </ExtraText>

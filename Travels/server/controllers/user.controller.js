@@ -36,13 +36,11 @@ export const login = async (req, res, next) => {
       return next(createError(404, 'Wrong Password or Username'))
 
     const { password, ...otherDetails } = user._doc
-    res .status(200)
-      .json({ details: { ...otherDetails } })
+    res.status(200).json({ details: { ...otherDetails } })
   } catch (err) {
     next(err)
   }
 }
-
 
 export const updatePassword = async (req, res, next) => {
   try {
@@ -114,10 +112,6 @@ export const forgetPassword = async (req, res, next) => {
     next(err)
   }
 }
-
-
-
-
 
 //update
 export const updateUser = async (req, res, next) => {
