@@ -1,63 +1,96 @@
 import * as React from 'react'
-import { Text, View } from 'react-native'
+import { Button, View } from 'react-native'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
-import { StatusBar } from 'expo-status-bar'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Dash } from './DashBoarIcons'
-import { StyledContainer, InnerContainer, PageLogo, PageTitle, SubTitle } from '../styles'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 
-function HomeScreen() {
-  return (
-    <StyledContainer>
-      <StatusBar style='dark' />
-      <InnerContainer>
-        <PageLogo
-          resizeMode='cover'
-          source={require('./../../assets/logo.png')}
-        />
-        <PageTitle>Ticket Booking</PageTitle>
-        <SubTitle>Accont Login</SubTitle>
-        <Dash />
-        </InnerContainer>
-        </StyledContainer>
+import { SubTitle,PageTitle,PageLogo, SubTitle1 } from '../styles'
+import { Signup } from './Signup'
+import { Login } from './login'
 
+function HomeScreen({ navigation }) {
+  return (
+    <>
+      <SubTitle1 />
+      <SubTitle1 />
+      <PageTitle>DashBoard</PageTitle>
+      <SubTitle1>Welcome name</SubTitle1>
+      <SubTitle1 />
+      <SubTitle1 />
+      <SubTitle1 />
+      
+      <Dash />
+    </>
   )
 }
 
-function SettingsScreen() {
+function SettingsScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+     
     </View>
   )
 }
 
-function Profile() {
+function Token({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile!</Text>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        onPress={() => navigation.navigate('Token')}
+        title='Go to notifications'
+      />
     </View>
   )
 }
-function Token() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Token!</Text>
-    </View>
-  )
-}
-const Tab = createMaterialBottomTabNavigator()
 
-export const TicketDashBoard=() =>{
+function Profile({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        onPress={() => navigation.navigate('Notifications')}
+        title='Go to notifications'
+      />
+    </View>
+  )
+}
+
+function PlaceHome({ navigation }) {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name='Home' icon='mail' component={HomeScreen} />
+      <Tab.Screen name='Profile' component={Profile} />
+      <Tab.Screen name='Token' component={Token} />
+      <Tab.Screen name='Settings' component={SettingsScreen} />
+    </Tab.Navigator>
+  )
+}
+
+function NotificationsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button onPress={() => navigation.goBack()} title='Go back home' />
+    </View>
+  )
+}
+
+const Drawer = createDrawerNavigator()
+
+const Tab = createBottomTabNavigator()
+
+export const TicketDashBoard=()=> {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name='Home' component={HomeScreen} />
-        <Tab.Screen name='Profile' component={Profile} />
-        <Tab.Screen name='Token' component={Token} />
-        <Tab.Screen name='Settings' component={SettingsScreen} />
-      </Tab.Navigator>
+      <Drawer.Navigator useLegacyImplementation initialRouteName='Ticket Booking'>
+        <Drawer.Screen name='Ticket Booking'  component={PlaceHome}>
+          {/* <PageLogo
+            resizeMode='cover'
+            source={require('./../../assets/logo.png')}
+          /> */}
+        </Drawer.Screen>
+        <Drawer.Screen name='Logout' component={Login} />
+      </Drawer.Navigator>
     </NavigationContainer>
   )
 }

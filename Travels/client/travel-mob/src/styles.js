@@ -43,6 +43,7 @@ export const PageTitle = styled.Text`
 export const SubTitle = styled.Text`
   font-size: 10px;
   margin-bottom: 20px;
+  text-align: center;
   letter-spacing: 1px;
   font-weight: bold;
   color: ${tertiary};
@@ -51,6 +52,7 @@ export const SubTitle = styled.Text`
 export const SubTitle1 = styled.Text`
   font-size: 12px;
   margin-bottom: 10px;
+  text-align: center;
   letter-spacing: 1px;
   font-weight: itelic;
   color: ${tertiary};

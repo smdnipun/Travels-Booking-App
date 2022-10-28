@@ -35,7 +35,7 @@ export const Login = () => {
   const [messageType, setMessageType] = useState()
 
   const handleLogin = async (credentials) => {
-    const url = 'http://192.168.8.175:5000/user/login'
+    const url = 'https://travels-ticket-booking.herokuapp.com/user/login'
     await axios
       .post(url, credentials)
       .then((res) => {
