@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "travels-mob",
-    "slug": "travels-mob",
+    "name": "travel-mob",
+    "slug": "travel-mob",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
