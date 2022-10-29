@@ -14,10 +14,11 @@ export const colors = {
   red: '#EF44444',
 }
 const { primary, secondary, tertiary, darkLight, brand, green, red } = colors
+
 export const StyledContainer = styled.View`
   flex: 1;
-  padding: 25px;
-  padding-top: ${StatusBarHeight + 10}px;
+  padding: 15px;
+  padding-top: ${StatusBarHeight + 30}px;
   background-color: ${primary};
 `
 
@@ -25,6 +26,28 @@ export const InnerContainer = styled.View`
   flex: 1;
   width: 100%;
   align-items: center;
+`
+
+export const WelcomeContainer = styled(InnerContainer)`
+  padding: 25px;
+  padding-top: 10px;
+  justify-content: center;
+`
+
+export const Avatar = styled.Image`
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border-radius: 50px;
+  border-width: 2px;
+  border-color: ${secondary};
+  margin-bottom: 10px;
+  margin-top: 10px;
+`
+
+export const WelcomeImage = styled.Image`
+  height: 50%;
+  min-width: 100%;
 `
 
 export const PageLogo = styled.Image`
@@ -38,6 +61,12 @@ export const PageTitle = styled.Text`
   font-weight: bold;
   color: ${brand};
   padding: 10px;
+
+  ${(props) =>
+    props.welcome == true &&
+    `
+    font-size: 35px;
+  `}
 `
 
 export const SubTitle = styled.Text`
@@ -47,6 +76,13 @@ export const SubTitle = styled.Text`
   letter-spacing: 1px;
   font-weight: bold;
   color: ${tertiary};
+
+  ${(props) =>
+    props.welcome == true &&
+    `
+    margin-bottom: 5px;
+    font-weight: normal;
+  `}
 `
 
 export const SubTitle1 = styled.Text`
@@ -130,7 +166,7 @@ export const ButtonText = styled.Text`
 export const MsgBox = styled.Text`
   text-align: center;
   font-size: 13px;
-  color:${props=>props.type=='SUCCESS' ? green :red} ;
+  color: ${(props) => (props.type == 'SUCCESS' ? green : red)};
 `
 
 export const Line = styled.View`
@@ -173,20 +209,12 @@ export const DashBoard = styled.View`
 `
 
 export const LeftBox = styled.View`
-width: 100px;
-height: 100px;
-left: 10px;
-
-
+  width: 100px;
+  height: 100px;
+  left: 10px;
 `
 export const RightBox = styled.View`
   width: 100px;
   height: 100px;
   right: -150px;
-  
- 
 `
-
-
- 
-

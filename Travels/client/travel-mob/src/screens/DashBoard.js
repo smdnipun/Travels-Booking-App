@@ -6,10 +6,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Dash } from './DashBoarIcons'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 
-import { SubTitle,PageTitle,PageLogo, SubTitle1 } from '../styles'
+import { SubTitle, PageTitle, PageLogo, SubTitle1 } from '../components/styles'
 import { Signup } from './Signup'
-import { Login } from './login'
+import { Login } from './Login'
 import { TripHistory } from './TripHistory'
+
+const Drawer = createDrawerNavigator()
+const Tab = createBottomTabNavigator()
 
 function HomeScreen({ navigation }) {
   return (
@@ -27,9 +30,9 @@ function HomeScreen({ navigation }) {
 
 function SettingsScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-     
-    </View>
+    <View
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+    ></View>
   )
 }
 
@@ -45,9 +48,7 @@ function Token({ navigation }) {
 }
 
 function Profile({ navigation }) {
-  return (
-   <TripHistory/>
-  )
+  return <TripHistory />
 }
 
 function PlaceHome({ navigation }) {
@@ -69,15 +70,14 @@ function NotificationsScreen({ navigation }) {
   )
 }
 
-const Drawer = createDrawerNavigator()
-
-const Tab = createBottomTabNavigator()
-
-export const TicketDashBoard=()=> {
+export const TicketDashBoard = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator useLegacyImplementation initialRouteName='Ticket Booking'>
-        <Drawer.Screen name='Ticket Booking'  component={PlaceHome}>
+      <Drawer.Navigator
+        useLegacyImplementation
+        initialRouteName='Ticket Booking'
+      >
+        <Drawer.Screen name='Ticket Booking' component={PlaceHome}>
           {/* <PageLogo
             resizeMode='cover'
             source={require('./../../assets/logo.png')}

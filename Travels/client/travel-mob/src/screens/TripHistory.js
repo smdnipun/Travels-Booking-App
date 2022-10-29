@@ -1,23 +1,22 @@
 import React from 'react'
 import { View, ScrollView, StyleSheet, Image } from 'react-native'
 import { Text, Card, Button, Icon } from '@rneui/themed'
-import { SubTitle } from '../styles'
+import { SubTitle } from '../components/styles'
 
 const users = [
   {
     name: 'brynn',
     avatar: 'https://uifaces.co/our-content/donated/1H_7AxP0.jpg',
-  }
+  },
 ]
-
-
 
 export const TripHistory = () => {
   return (
     <>
       <SubTitle />
       <SubTitle />
-      <SubTitle /><SubTitle/>
+      <SubTitle />
+      <SubTitle />
       <ScrollView>
         <View style={styles.container}>
           <Card>

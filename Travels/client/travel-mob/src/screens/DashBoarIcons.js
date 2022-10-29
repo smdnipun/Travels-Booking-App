@@ -8,8 +8,7 @@ import {
   Ionicons,
 } from '@expo/vector-icons'
 import { Text } from 'react-native'
-import { SubTitle1, SubTitle2 } from '../styles'
-
+import { SubTitle1, SubTitle2 } from '../components/styles'
 
 const DashIcons = (navigation) => {
   return (
