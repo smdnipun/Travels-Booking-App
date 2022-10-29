@@ -23,7 +23,7 @@ export const RootStack = () => {
           },
           // headerTintColor: tertiary,
           headerTransparent: true,
-          HeaderTitle: '',
+          headerTitle: '',
         }}
         initialRouteName='Login'
       >

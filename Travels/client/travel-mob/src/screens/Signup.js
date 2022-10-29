@@ -5,8 +5,7 @@ import axios from 'axios'
 
 import {
   StyledContainer,
-  InnerContainer,
-  PageLogo,
+  InnerContainer, 
   PageTitle,
   SubTitle,
   StyledFormArea,
