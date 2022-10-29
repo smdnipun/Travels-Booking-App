@@ -19,8 +19,6 @@ function HomeScreen({ navigation }) {
       <SubTitle1>Welcome name</SubTitle1>
       <SubTitle1 />
       <SubTitle1 />
-      <SubTitle1 />
-      
       <Dash />
     </>
   )
