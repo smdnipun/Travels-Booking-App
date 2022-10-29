@@ -9,6 +9,7 @@ import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { SubTitle,PageTitle,PageLogo, SubTitle1 } from '../styles'
 import { Signup } from './Signup'
 import { Login } from './login'
+import { TripHistory } from './TripHistory'
 
 function HomeScreen({ navigation }) {
   return (
@@ -47,12 +48,7 @@ function Token({ navigation }) {
 
 function Profile({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        onPress={() => navigation.navigate('Notifications')}
-        title='Go to notifications'
-      />
-    </View>
+   <TripHistory/>
   )
 }
 
