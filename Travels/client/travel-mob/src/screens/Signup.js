@@ -5,7 +5,7 @@ import axios from 'axios'
 
 import {
   StyledContainer,
-  InnerContainer, 
+  InnerContainer,
   PageTitle,
   SubTitle,
   StyledFormArea,
@@ -50,17 +50,34 @@ export const Signup = ({ navigation }) => {
   //   setShow(true)
   // }
 
-  const handleSignup = (credentials) => {
-    axios
-      .post('http://192.168.8.175:5000/user/register', credentials)
+  const handleSignup = async (data, setSubmitting) => {
+    handleMessage(null)
+    const url = 'http://192.168.8.114:5000/user/register'
+    await axios
+      .post(url, data)
       .then((res) => {
-        console.log(res.data)
-        navigation.navigate('Login')
+        const result = res.data
+        console.log(result)
+
+        if ((res.data = 'Created')) {
+          navigation.navigate('Login')
+        } else if ((res.data = 'Exists')) {
+          handleMessage('The user already exists', 'FAILED')
+        } else {
+          handleMessage('An error occured. Please try again!', 'FAILED')
+        }
+        setSubmitting(false)
       })
       .catch((err) => {
         console.log(err)
+        setSubmitting(false)
+        handleMessage('An error occured. Please try again!')
       })
-    console.log(credentials)
+  }
+
+  const handleMessage = (message, type = 'FAILED') => {
+    setMessage(message)
+    setMessageType(type)
   }
 
   return (
@@ -90,31 +107,31 @@ export const Signup = ({ navigation }) => {
               password: '',
               // confirmPassword: '',
             }}
-            onSubmit={(values) => {
-              // let obj = {
-              //   fullName: values.fullName,
-              //   email: values.email,
-              //   phnNo: values.phnNo,
-              //   address: values.address,
-              //   nic: values.nic,
-              //   password: values.password,
-              // }
-              // if (
-              //   values.fullName == '' ||
-              //   values.email == '' ||
-              //   values.phnNo == '' ||
-              //   values.address == '' ||
-              //   values.nic == '' ||
-              //   values.password == ''
-              // ) {
-              //   handleMessage('Please fill all the fields')
-              //   setSubmitting(false)
-              // } else if (values.password != values.confirmPassword) {
-              //   handleMessage('Password do not match!!!')
-              //   setSubmitting(false)
-              // } else {
-              handleSignup(values)
-              // }
+            onSubmit={(values, { setSubmitting }) => {
+              let obj = {
+                fullName: values.fullName,
+                email: values.email,
+                phnNo: values.phnNo,
+                address: values.address,
+                nic: values.nic,
+                password: values.password,
+              }
+              if (
+                values.fullName == '' ||
+                values.email == '' ||
+                values.phnNo == '' ||
+                values.address == '' ||
+                values.nic == '' ||
+                values.password == ''
+              ) {
+                handleMessage('Please fill all the fields')
+                setSubmitting(false)
+              } else if (values.password !== values.confirmPassword) {
+                handleMessage('Password do not match!!!')
+                setSubmitting(false)
+              } else {
+                handleSignup(obj, setSubmitting)
+              }
             }}
           >
             {({
@@ -226,8 +243,8 @@ export const Signup = ({ navigation }) => {
                   </StyledButton>
                 )}
                 {isSubmitting && (
-                  <StyledButton onPress={handleSubmit}>
-                    <ActivityIndicator />
+                  <StyledButton disabled={true}>
+                    <ActivityIndicator size='large' color={primary} />
                   </StyledButton>
                 )}
               </StyledFormArea>

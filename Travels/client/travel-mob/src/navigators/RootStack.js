@@ -17,15 +17,15 @@ export const RootStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: 'transparent',
-          },
-          // headerTintColor: tertiary,
-          headerTransparent: true,
-          headerTitle: '',
-        }}
-        initialRouteName='Login'
+        // screenOptions={{
+        //   headerStyle: {
+        //     backgroundColor: 'transparent',
+        //   },
+        //   // headerTintColor: tertiary,
+        //   headerTransparent: true,
+        //   headerTitle: '',
+        // }}
+        // initialRouteName='Login'
       >
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Signup' component={Signup} />

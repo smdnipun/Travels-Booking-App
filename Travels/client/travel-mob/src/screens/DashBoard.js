@@ -14,7 +14,8 @@ import { TripHistory } from './TripHistory'
 const Drawer = createDrawerNavigator()
 const Tab = createBottomTabNavigator()
 
-function HomeScreen({ navigation }) {
+function HomeScreen({ navigation, route }) {
+  const { fullName, email } = route.params
   return (
     <>
       <SubTitle1 />
@@ -72,19 +73,14 @@ function NotificationsScreen({ navigation }) {
 
 export const TicketDashBoard = () => {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        useLegacyImplementation
-        initialRouteName='Ticket Booking'
-      >
-        <Drawer.Screen name='Ticket Booking' component={PlaceHome}>
-          {/* <PageLogo
+    <Drawer.Navigator useLegacyImplementation initialRouteName='Ticket Booking'>
+      <Drawer.Screen name='Ticket Booking' component={PlaceHome}>
+        {/* <PageLogo
             resizeMode='cover'
             source={require('./../../assets/logo.png')}
           /> */}
-        </Drawer.Screen>
-        <Drawer.Screen name='Logout' component={Login} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+      </Drawer.Screen>
+      <Drawer.Screen name='Logout' component={Login} />
+    </Drawer.Navigator>
   )
 }

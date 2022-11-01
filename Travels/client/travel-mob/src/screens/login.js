@@ -35,32 +35,32 @@ export const Login = ({ navigation }) => {
   const [message, setMessage] = useState()
   const [messageType, setMessageType] = useState()
 
-  const handleLogin = async (credentials) => {
-    const url = 'https://travels-ticket-booking.herokuapp.com/user/login'
+  const handleLogin = async (credentials, setSubmitting) => {
+    handleMessage(null)
+    const url = 'http://192.168.8.114:5000/user/login'
     await axios
       .post(url, credentials)
       .then((res) => {
         const result = res.data
-        console.log(result)
 
-        const { message, status, data } = result
-
-        if (status !== 'SUCESS') {
+        if (!result.success) {
+          handleMessage(result.message, 'FAILED')
         } else {
-          // NavigationPreloadManager.navigate('Welcome', { ...data[0]});
-          console.log(message, status)
-          navigation.navigate('Dashboard')
+          navigation.navigate('Dashboard', { ...result.data[0] })
         }
+        setSubmitting(false)
       })
       .catch((err) => {
         console.log(err)
+        setSubmitting(false)
+        handleMessage('An error occured. Please try again!')
       })
   }
 
-  // const handleMessage = (message, type = 'FAILD') => {
-  //   setMessage(message)
-  //   setMessageType(type)
-  // }
+  const handleMessage = (message, type = 'FAILED') => {
+    setMessage(message)
+    setMessageType(type)
+  }
 
   return (
     <>
@@ -75,16 +75,22 @@ export const Login = ({ navigation }) => {
           <SubTitle>Accont Login</SubTitle>
           <Formik
             initialValues={{ email: '', password: '' }}
-            onSubmit={(values) => {
-              console.log(values)
+            onSubmit={(values, { setSubmitting }) => {
               if (values.email == '' || values.password == '') {
-                handleMessage('please fill all the fields')
+                handleMessage('Please fill all the fields')
+                setSubmitting(false)
               } else {
-                handleLogin(values)
+                handleLogin(values, setSubmitting)
               }
             }}
           >
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              isSubmitting,
+            }) => (
               <StyledFormArea>
                 <InputCd
                   label='Email'
@@ -112,15 +118,18 @@ export const Login = ({ navigation }) => {
                 />
                 <MsgBox type={messageType}>{message}</MsgBox>
 
-                <StyledButton onPress={handleSubmit}>
-                  <ButtonText>Login</ButtonText>
-                </StyledButton>
+                {!isSubmitting && (
+                  <StyledButton onPress={handleSubmit}>
+                    <ButtonText>Login</ButtonText>
+                  </StyledButton>
+                )}
 
-                {/* {isSubmitting && (
-                <StyledButton disabled={true}>
-                  <ActivityIndicator size='large' color={primary} />
-                </StyledButton>
-              )} */}
+                {isSubmitting && (
+                  <StyledButton disabled={true}>
+                    <ActivityIndicator size='large' color={primary} />
+                  </StyledButton>
+                )}
+
                 <Line />
                 {/* <StyledButton google={true} onPress={handleSubmit}>
                   <Fontisto name='google' color={primary} size={25} />
