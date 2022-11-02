@@ -1,21 +1,17 @@
 import * as React from 'react'
 import { Button, View } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Dash } from './DashBoarIcons'
-import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 
 import { SubTitle, PageTitle, PageLogo, SubTitle1 } from '../components/styles'
-import { Signup } from './Signup'
-import { Login } from './Login'
 import { TripHistory } from './TripHistory'
+import { Payment, PaymentHandler } from './Payment'
 
 const Drawer = createDrawerNavigator()
 const Tab = createBottomTabNavigator()
 
-function HomeScreen({ navigation, route }) {
-  const { fullName, email } = route.params
+const HomeScreen = ({ navigation, route })=> {
   return (
     <>
       <SubTitle1 />
@@ -39,12 +35,13 @@ function SettingsScreen({ navigation }) {
 
 function Token({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
+    <>
+      {/* <Button
         onPress={() => navigation.navigate('Token')}
         title='Go to notifications'
-      />
-    </View>
+      /> */}
+      <PaymentHandler />
+    </>
   )
 }
 
@@ -80,7 +77,7 @@ export const TicketDashBoard = () => {
             source={require('./../../assets/logo.png')}
           /> */}
       </Drawer.Screen>
-      <Drawer.Screen name='Logout' component={Login} />
+      {/* <Drawer.Screen name='Logout' component={Login} /> */}
     </Drawer.Navigator>
   )
 }

@@ -27,9 +27,13 @@ import {
 import { Formik } from 'formik'
 import { View, ActivityIndicator } from 'react-native'
 import { KeyBoardAvoidingWrapper } from '../components/KeyBoardAvoidingWrapper.js'
+import * as SecureStore from 'expo-secure-store'
 
 const { brand, darkLight, primary } = colors
 
+async function save(key, value) {
+  await SecureStore.setItemAsync(key, value)
+}
 export const Login = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true)
   const [message, setMessage] = useState()
@@ -37,7 +41,7 @@ export const Login = ({ navigation }) => {
 
   const handleLogin = async (credentials, setSubmitting) => {
     handleMessage(null)
-    const url = 'http://192.168.8.114:5000/user/login'
+    const url = 'https://travels-ticket-booking.herokuapp.com/user/login'
     await axios
       .post(url, credentials)
       .then((res) => {

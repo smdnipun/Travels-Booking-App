@@ -52,7 +52,7 @@ export const Signup = ({ navigation }) => {
 
   const handleSignup = async (data, setSubmitting) => {
     handleMessage(null)
-    const url = 'http://192.168.8.114:5000/user/register'
+    const url = 'https://travels-ticket-booking.herokuapp.com/user/register'
     await axios
       .post(url, data)
       .then((res) => {

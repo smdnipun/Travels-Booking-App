@@ -115,7 +115,16 @@ export const StyledTextInput = styled.TextInput`
   margin-bottom: 10px;
   color: ${tertiary};
 `
-
+export const StyledTextInputCard = styled.TextInput`
+  background-color: ${secondary};
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  height: 45px;
+  margin-bottom: 10px;
+  color: ${tertiary};
+`
 export const StyledInputLabel = styled.Text`
   color: ${tertiary};
   font-size: 13px;
