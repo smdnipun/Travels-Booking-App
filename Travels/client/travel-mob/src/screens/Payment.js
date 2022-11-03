@@ -39,7 +39,7 @@ import { Formik } from 'formik'
 
 const { brand, darkLight, primary } = colors
 
-const Payment = ({ navigation }) => {
+const Payment = () => {
   const [show, setShow] = useState(false)
   // const [amount, setAmount] =  useState()
   const userId = '6358955023633526fa90da4c'
@@ -47,31 +47,24 @@ const Payment = ({ navigation }) => {
   const [message, setMessage] = useState()
   const [messageType, setMessageType] = useState()
 
-  const handlePay = async () => {
-    console.log("test")
-    navigation.navigate('Qrcode')
-    // handleMessage(null)
-    // // const response = await axios.post(url,{paymentMethodType:'card',currency:'usd'}).then((res)=>{})
-    // const url = 'https://travels-ticket-booking.herokuapp.com/user/register'
-    // await axios
-    //   .post(url, data)
-    //   .then((res) => {
-    //     const result = res.data
-    //     console.log(result)
-    //     if ((res.data = 'Created')) {
-    //       navigation.navigate('Login')
-    //     } else if ((res.data = 'Exists')) {
-    //       handleMessage('The user already exists', 'FAILED')
-    //     } else {
-    //       handleMessage('An error occured. Please try again!', 'FAILED')
-    //     }
-    //     setSubmitting(false)
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //     setSubmitting(false)
-    //     handleMessage('An error occured. Please try again!')
-    //   })
+  const handlePay = async (data,setSubmitting) => {
+    // console.log("test")
+    // navigation.navigate('Qrcode')
+    handleMessage(null)
+    // const response = await axios.post(url,{paymentMethodType:'card',currency:'usd'}).then((res)=>{})
+    const url = 'https://travels-ticket-booking.herokuapp.com/payment/add'
+    await axios
+      .post(url, data)
+      .then((res) => {
+        const result = res.data
+        console.log(result)
+        setSubmitting(false)
+      })
+      .catch((err) => {
+        console.log(err)
+        setSubmitting(false)
+        handleMessage('An error occured. Please try again!')
+      })
   }
 
   const handleMessage = (message, type = 'FAILED') => {
@@ -90,25 +83,29 @@ const Payment = ({ navigation }) => {
               amount: '',
               cardNo: '',
               cvv: '',
-              expireDate: '',
+              month: '',
+              year:'',
+              
             }}
             onSubmit={(values, { setSubmitting }) => {
               let obj = {
                 amount: values.amount,
                 cardNo: values.cardNo,
                 cvv: values.cvv,
-                expireDate: values.expireDate,
+                expireDate:values.year +'/'+values.month
+               
               }
               if (
                 values.amount == '' ||
                 values.cardNo == '' ||
                 values.cvv == '' ||
-                values.expireDate == ''
+                values.year == '' ||
+                values.month==''
               ) {
                 handleMessage('Please fill all the fields')
                 setSubmitting(false)
               } else {
-                handleSignup(obj, setSubmitting)
+                handlePay(obj, setSubmitting)
               }
             }}
           >
@@ -171,19 +168,20 @@ const Payment = ({ navigation }) => {
                     icon='location'
                     placeholder='MM'
                     placeholderTextColor={darkLight}
-                    onChangeText={handleChange('address')}
-                    onBlur={handleBlur('address')}
+                    onChangeText={handleChange('month')}
+                    onBlur={handleBlur('month')}
                     style={{ width: 75 }}
-                    value={values.address}
+                    value={values.month}
+                    keyboardType='numeric'
                   />
 
                   <InputCd
                     label='Year'
                     placeholder='YY'
                     placeholderTextColor={darkLight}
-                    onChangeText={handleChange('nic')}
-                    onBlur={handleBlur('nic')}
-                    value={values.nic}
+                    onChangeText={handleChange('year')}
+                    onBlur={handleBlur('year')}
+                    value={values.year}
                     style={{ width: 75 }}
                     keyboardType='numeric'
                   />
@@ -198,7 +196,7 @@ const Payment = ({ navigation }) => {
                   }}
                 >
                   {!isSubmitting && (
-                    <StyledButton onPress={handlePay}>
+                    <StyledButton onPress={handleSubmit}>
                       <ButtonText>Confirm</ButtonText>
                     </StyledButton>
                   )}

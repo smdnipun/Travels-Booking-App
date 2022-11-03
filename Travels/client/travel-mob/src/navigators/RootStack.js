@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 //screens
-import { Login } from '../screens/Login.js'
+import { Login } from '../screens/login.js'
 import { Signup } from '../screens/Signup.js'
 import { TicketDashBoard } from '../screens/DashBoard.js'
 import { QRGenerator } from '../screens/QrCode.js'
