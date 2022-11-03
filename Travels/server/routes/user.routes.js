@@ -1,33 +1,22 @@
 import express from 'express'
-import {
-  forgetPassword,
-  login,
-  register,
-  updatePassword,
-  verifyEmail,
-  getUser,
-  updateUser,
-  deleteUser,
-  getUsers,
-} from '../controllers/user.controller.js'
+
+import { AuthApi, UserApi } from '../controllers/user.controller.js'
 
 const router = express.Router()
-
-router.post('/register', register)
-router.post('/login', login)
-router.put('/updatePwd/:id', updatePassword)
-router.post('/verifyEmail', verifyEmail)
-router.put('/forgetPassword', forgetPassword)
+//auth 
+router.post('/register', AuthApi().register)
+router.post('/login', AuthApi().login)
+router.put('/updatePwd/:id', AuthApi().updatePwd)
 //update
-router.put('/:id', updateUser)
+router.put('/:id', UserApi().update)
 
 //delete
-router.delete('/:id', deleteUser)
+router.delete('/:id', UserApi().delete)
 
 //get
-router.get('/:id', getUser)
+router.get('/:id', UserApi().get)
 
 // get all
-router.get('/', getUsers)
+router.get('/', UserApi().getAll)
 
 export default router

@@ -4,6 +4,9 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 
 import userRoute from './routes/user.routes.js'
+import invalidTokenRoute from './routes/InvalidToken.routes.js'
+import allocateInspectRoute from './routes/allocateInspector.routes.js'
+import paymentRoute from './routes/payment.routes.js'
 
 dotenv.config()
 const app = express()
@@ -12,43 +15,44 @@ const port = process.env.PORT || 5000
 app.use(cors())
 app.use(express.json())
 app.use('/user', userRoute)
+app.use('/invalidToken', invalidTokenRoute)
+app.use('/allocateInsp', allocateInspectRoute)
+app.use('/payment',paymentRoute)
 
-const uri = process.env.MONG_URL
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+//database connection using singleton
+const Database = (() => {
+  let instance
+  const uri = process.env.MONG_URL
 
-// const connect = async () => {
-//   try {
-//     await mongoose.connect(process.env.MONG_URL).then(() => {
-//       console.log('Connected to mongoDB')
-//     })
-//   } catch (err) {
-//     throw err
-//   }
-// }
+  function createDatabaseInstance() {
+    mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    const connection = mongoose.connection
+    return connection
+  }
+  function getDatabaseInstance() {
+    if (!instance) {
+      instance = createDatabaseInstance()
+    }
+    return instance
+  }
+  return { getDatabaseInstance }
+})()
 
-const connection = mongoose.connection
-connection.once('open', () => {
+// const connection = mongoose.connection
+const dbconnection = Database.getDatabaseInstance()
+
+dbconnection.once('open', () => {
   console.log('MongoDB database connection established successfully')
 })
 
-connection.on('disconnected', () => {
+dbconnection.on('disconnected', () => {
   console.log('mongoDB disconnected !!!')
-})
-
-//error handling
-app.use((err, req, res, next) => {
-  const errorStatus = err.status || 500
-  const errorMessage = err.message || 'Something went wrong!!!'
-  return res.status(errorStatus).json({
-    success: false,
-    status: errorStatus,
-    message: errorMessage,
-    stack: err.stack,
-  })
 })
 
 //port connecting
 app.listen(port, () => {
-  // connect()
   console.log('Successfully connected to PORT 5000')
 })
