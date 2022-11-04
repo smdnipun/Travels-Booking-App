@@ -1,6 +1,7 @@
 import User from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 import { createError } from '../util/error.js'
+import usersService from '../services/users.service.js'
 //register user
 
 export const AuthApi = () => {
@@ -90,13 +91,7 @@ export const UserApi = () => {
   //update
   const updateUser = async (req, res, next) => {
     try {
-      const updateUser = await User.findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: req.body,
-        },
-        { new: true }
-      )
+      const updateUser = await usersService.updateUser(id,req.body)
       res.status(200).json(updateUser)
     } catch (err) {
       next(err)
@@ -106,7 +101,7 @@ export const UserApi = () => {
   //delete
   const deleteUser = async (req, res, next) => {
     try {
-      await User.findByIdAndDelete(req.params.id)
+      await usersService.deleteUser(req.params.id)
       res.status(200).json('User has been deleted')
     } catch (err) {
       next(err)
@@ -116,7 +111,7 @@ export const UserApi = () => {
   //get by ID
   const getUser = async (req, res, next) => {
     try {
-      const user = await User.findById(req.params.id)
+      const user = await usersService.getUser(req.params.id)
       res.status(200).json(user)
     } catch (err) {
       next(err)
@@ -126,7 +121,7 @@ export const UserApi = () => {
   //get All
   const getUsers = async (req, res, next) => {
     try {
-      const users = await User.find()
+      const users = await usersService.getUsers()
       res.status(200).json(users)
     } catch (err) {
       next(err)
