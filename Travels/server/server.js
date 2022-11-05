@@ -20,20 +20,40 @@ app.use('/allocateInsp', allocateInspectRoute)
 app.use('/payment', paymentRoute)
 
 //database connection using singleton
-const uri = process.env.MONG_URL
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+const Database = (() => {
+  let instance
+  const uri = process.env.MONG_URL
 
-// get driver connection
-// const dbo = require("./db/conn");
+  function createDatabaseInstance() {
+    mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    const connection = mongoose.connection
+    return connection
+  }
+  function getDatabaseInstance() {
+    if (!instance) {
+      instance = createDatabaseInstance()
+    }
+    return instance
+  }
+  return { getDatabaseInstance }
+})()
 
-const connection = mongoose.connection
-connection.once('open', () => {
+// const connection = mongoose.connection
+const dbconnection = Database.getDatabaseInstance()
+
+dbconnection.once('open', () => {
   console.log('MongoDB database connection established successfully')
 })
 
-app.listen(port, () => {
-  // perform a database connection when server starts
-  console.log(`Server is running on port: ${port}`)
+dbconnection.on('disconnected', () => {
+  console.log('mongoDB disconnected !!!')
 })
 
-module.exports={app}
+//port connecting
+app.listen(port, () => {
+  console.log('Successfully connected to PORT 5000')
+})
+module.exports = { app }
