@@ -8,7 +8,6 @@ const AllocateInspectorSchema = new mongoose.Schema({
   route: {
     type: String,
     required: true,
-    unique: true,
   },
   date: {
     type: String,

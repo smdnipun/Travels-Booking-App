@@ -17,42 +17,23 @@ app.use(express.json())
 app.use('/user', userRoute)
 app.use('/invalidToken', invalidTokenRoute)
 app.use('/allocateInsp', allocateInspectRoute)
-app.use('/payment',paymentRoute)
+app.use('/payment', paymentRoute)
 
 //database connection using singleton
-const Database = (() => {
-  let instance
-  const uri = process.env.MONG_URL
+const uri = process.env.MONG_URL
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
-  function createDatabaseInstance() {
-    mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    const connection = mongoose.connection
-    return connection
-  }
-  function getDatabaseInstance() {
-    if (!instance) {
-      instance = createDatabaseInstance()
-    }
-    return instance
-  }
-  return { getDatabaseInstance }
-})()
+// get driver connection
+// const dbo = require("./db/conn");
 
-// const connection = mongoose.connection
-const dbconnection = Database.getDatabaseInstance()
-
-dbconnection.once('open', () => {
+const connection = mongoose.connection
+connection.once('open', () => {
   console.log('MongoDB database connection established successfully')
 })
 
-dbconnection.on('disconnected', () => {
-  console.log('mongoDB disconnected !!!')
+app.listen(port, () => {
+  // perform a database connection when server starts
+  console.log(`Server is running on port: ${port}`)
 })
 
-//port connecting
-app.listen(port, () => {
-  console.log('Successfully connected to PORT 5000')
-})
+module.exports={app}
